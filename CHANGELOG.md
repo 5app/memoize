@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/5app/memoize/compare/v1.0.1...v1.0.2) (2020-02-21)
+
+
+### Bug Fixes
+
+* **deps:** move dev dependency ([4741332](https://github.com/5app/memoize/commit/4741332e32d7c59e61247fae7ff4fb4a5fb5021d))
+
 ## [1.0.1](https://github.com/5app/memoize/compare/v1.0.0...v1.0.1) (2020-02-21)
 
 
