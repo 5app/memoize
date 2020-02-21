@@ -123,4 +123,55 @@ describe('memoize', () => {
 		const valueC = await mem(1);
 		expect(valueC).to.equal(2);
 	});
+
+	it('should skip rejected responses when useCache:true', async () => {
+		let counter = 0;
+		const mem = memoize(
+			async () => {
+				counter++;
+				if (counter % 2) {
+					throw new Error('this is odd');
+				}
+				return counter;
+			},
+			{
+				useCache: true,
+				staleInMs: 0,
+			}
+		);
+
+		// 1. Fails
+		await expect(mem(1)).to.be.eventually.rejectedWith('this is odd');
+
+		// 2. Succeeds returns 2
+		const valueB = await mem(1);
+		expect(valueB).to.equal(2);
+
+		// 3. Rejects but returns 2
+		const valueC = await mem(1);
+		expect(valueC).to.equal(2);
+	});
+
+	it('should allow control over whether to use the Cache', async () => {
+		let counter = 0;
+		const mem = memoize(
+			async () => {
+				counter++;
+				throw new Error(`this is odd ${counter}`);
+			},
+			{
+				useCached() {
+					// Use cache of rejected as well
+					return true;
+				},
+				staleInMs: 10000, // sometime in the distance
+			}
+		);
+
+		// 1. Fails
+		await expect(mem(1)).to.be.eventually.rejectedWith('this is odd 1');
+
+		// 2. Fails, but doesn't try again
+		await expect(mem(1)).to.be.eventually.rejectedWith('this is odd 1');
+	});
 });

@@ -13,7 +13,7 @@
  *
  * @param {Function} callback - Function to wrap
  * @param {object} opts - Options
- * @param {boolean} [opts.useCached=true] - Whether to serve from previous resolved cached responses
+ * @param {boolean|Function} [opts.useCached=true] - Whether to serve from previous resolved cached responses
  * @param {number} [opts.staleInMs=10000] - Number of milliseconds before the item is regarded as stale
  * @param {Function} [opts.getKey=JSON.stringify] - Function used to define the key for use
  * @param {object} [opts.cache=new Map()] - Caching function uses Map by default
@@ -34,6 +34,16 @@ function Memoize(callback, opts = {}) {
 		cache = new Map(),
 	} = opts;
 
+	// Default check for shouldUseCache
+	// If we have a resolved value, but we want to keep it up to date set to true
+	let shouldUseCache = item => item.status === 'resolved' && useCached;
+
+	// If the settings say it's a function use that instead
+	if (typeof useCached === 'function') {
+		// Update the condition to use the bespoke option
+		shouldUseCache = useCached;
+	}
+
 	/**
 	 * Decorator
 	 *
@@ -53,8 +63,8 @@ function Memoize(callback, opts = {}) {
 			return item.value;
 		}
 
-		// If we have a resolved value, but we want to keep it up to date
-		if (item.status === 'resolved' && useCached) {
+		// Serve the cached value?
+		if (item.value && shouldUseCache(item)) {
 			// We're going to return the last resolved value
 			// But first let's identify the next request
 			// And ensure it's been long enough since the last one...
