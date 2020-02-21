@@ -1,3 +1,10 @@
+# 1.0.0 (2020-02-21)
+
+
+### Features
+
+* **init:** initial release ([a736337](https://github.com/5app/memoize/commit/a736337c97bee99fe4a254cdbdba16a6fe66bd8e))
+
 ## [1.2.1](https://github.com/5app/js-template/compare/v1.2.0...v1.2.1) (2019-12-12)
 
 
