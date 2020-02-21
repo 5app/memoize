@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/5app/memoize/compare/v1.0.0...v1.0.1) (2020-02-21)
+
+
+### Bug Fixes
+
+* **jsdoc:** option descriptions ([3ac9481](https://github.com/5app/memoize/commit/3ac9481627e147d2c308257524c26f9d9bfdb78b))
+
 # 1.0.0 (2020-02-21)
 
 
