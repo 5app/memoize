@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/5app/memoize/compare/v1.0.2...v1.1.0) (2020-02-21)
+
+
+### Features
+
+* **useCached:** update useCached to accept a function or boolean ([bfbdd8f](https://github.com/5app/memoize/commit/bfbdd8f77c8e49839f65da005733e5b2aba08714))
+
 ## [1.0.2](https://github.com/5app/memoize/compare/v1.0.1...v1.0.2) (2020-02-21)
 
 
