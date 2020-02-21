@@ -1,15 +1,26 @@
-# Package Template
+# Memoize
+[![CircleCI](https://circleci.com/gh/5app/memoize.svg?style=shield)](https://circleci.com/gh/5app/memoize)
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/5app/package-template.svg)](https://greenkeeper.io/)
-[![CircleCI](https://circleci.com/gh/5app/package-template.svg?style=shield)](https://circleci.com/gh/5app/package-template)
+> In computing, memoization or memoisation is an optimization technique used primarily to speed up computer programs by storing the results of expensive function calls and returning the cached result when the same inputs occur again. Memoization has also been used in other contexts (and for purposes other than speed gains), such as in simple mutually recursive descent parsing.[1] Although related to caching, memoization refers to a specific case of this optimization, distinguishing it from forms of caching such as buffering or page replacement. In the context of some logic programming languages, memoization is also known as tabling.[2]
 
-This is a template for starting new JS projects at 5app.
+<cite>https://en.wikipedia.org/wiki/Memoization</cite>
 
-## Getting started
+# Usage
 
-Run `npm init` to configure package.json
+!Warning contrived example ahead...
 
-### For packages to be posted to NPM
+```js
+const got = require('got'); // simple http requst library for the purpose of demonstration
+const memoize = require('@5app/memoize');
 
-1. Remove the setting `private: true` from [./package.json](./package.json]).
-   This protects accidentally publishing to *npm*. If you want to publish to npm then this will prevent it until removed.
+// Let's say we're going to decorate an add function... it's 
+const memoGot = memoize(got);
+
+// Simultaneously open two connections...
+const link = 'https://github.com';
+Promise.all([memoGot(link), memoGot(link)];
+
+// only one request is actually made, the second will piggy back off the first.
+```
+
+
