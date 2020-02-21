@@ -13,7 +13,10 @@
  *
  * @param {Function} callback - Function to wrap
  * @param {object} opts - Options
- * @param {number} opts.staleInMs - Number of milliseconds before the item is regarded as stale
+ * @param {boolean} [opts.useCached=true] - Whether to serve from previous resolved cached responses
+ * @param {number} [opts.staleInMs=10000] - Number of milliseconds before the item is regarded as stale
+ * @param {Function} [opts.getKey=JSON.stringify] - Function used to define the key for use
+ * @param {object} [opts.cache=new Map()] - Caching function uses Map by default
  * @returns {Function} The decorated callback function
  */
 function Memoize(callback, opts = {}) {
