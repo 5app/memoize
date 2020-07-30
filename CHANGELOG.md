@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/5app/memoize/compare/v1.1.0...v1.2.0) (2020-07-30)
+
+
+### Features
+
+* **cacheMaxSize:** Remove oldest items from cache ([a92d21d](https://github.com/5app/memoize/commit/a92d21d260e5654a40c609a94a9a79424cd4a838))
+
 # [1.1.0](https://github.com/5app/memoize/compare/v1.0.2...v1.1.0) (2020-02-21)
 
 
