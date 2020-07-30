@@ -174,4 +174,19 @@ describe('memoize', () => {
 		// 2. Fails, but doesn't try again
 		await expect(mem(1)).to.be.eventually.rejectedWith('this is odd 1');
 	});
+
+	it('should not contain more than 1000 enties in the cache by default', async () => {
+		const cache = new Map();
+		const mem = memoize(async (number) => number / 2, {
+			cache,
+		});
+
+		await Promise.all(
+			Array(2000)
+				.fill(null)
+				.map((_, index) => mem(index))
+		);
+
+		expect(cache.size).to.equal(1000);
+	});
 });

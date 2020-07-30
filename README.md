@@ -1,4 +1,5 @@
 # Memoize
+
 [![CircleCI](https://circleci.com/gh/5app/memoize.svg?style=shield)](https://circleci.com/gh/5app/memoize)
 
 > In computing, memoization or memoisation is an optimization technique used primarily to speed up computer programs by storing the results of expensive function calls and returning the cached result when the same inputs occur again. Memoization has also been used in other contexts (and for purposes other than speed gains), such as in simple mutually recursive descent parsing.[1] Although related to caching, memoization refers to a specific case of this optimization, distinguishing it from forms of caching such as buffering or page replacement. In the context of some logic programming languages, memoization is also known as tabling.[2]
@@ -13,7 +14,7 @@
 const got = require('got'); // simple http requst library for the purpose of demonstration
 const memoize = require('@5app/memoize');
 
-// Let's say we're going to decorate an add function... it's 
+// Let's say we're going to decorate an add function... it's
 const memoGot = memoize(got);
 
 // Simultaneously open two connections...
@@ -25,11 +26,17 @@ Promise.all([memoGot(link), memoGot(link)];
 
 # Options `memoize(handler, {...options})`
 
+-   `option.useCache` _(Boolean|Function)_: A truthy/fasly or a function to decide whether to use the cached record or not. Default `true`
+-   `option.staleInMs` _Number_: The number of milliseconds before the cache is deemed stale. Results will still be served from the cache whilst an attempt to refresh the cache is made separatly. Default `10000` ms.
+-   `option.getKey` _Function_: A function to create a key based upon the input of the function being memoized. Default: a serialization of all the arguments.
+-   `option.cache` _Object_: Instance of a Map like object to store the cache. Default `new Map`
+-   `options.cacheMaxSize` _Number_: The maximum number of entries to store in the cache. Default `1000`
+
 ## `option.useCache`
 
 Whether to use cache this can be a Boolean value (useful to disable it when testing). Or a function e.g.
 
-This snippet checks the cached value before deciding whether to use it... 
+This snippet checks the cached value before deciding whether to use it...
 
 ```js
 const memoize = require('@5app/memoize');
@@ -52,12 +59,10 @@ const memoGot = memoize(got, {
 	}
 }
 
-// ... 
+// ...
 
 // Use Memogot
 // const req = memogot('link');
 // ...
 
 ```
-
-

@@ -17,6 +17,7 @@
  * @param {number} [opts.staleInMs=10000] - Number of milliseconds before the item is regarded as stale
  * @param {Function} [opts.getKey=JSON.stringify] - Function used to define the key for use
  * @param {object} [opts.cache=new Map()] - Caching function uses Map by default
+ * @param {number} [opts.cacheMaxSize=1000] - Maximum Cache Size
  * @returns {Function} The decorated callback function
  */
 function Memoize(callback, opts = {}) {
@@ -32,6 +33,9 @@ function Memoize(callback, opts = {}) {
 
 		// cache: Caching Map
 		cache = new Map(),
+
+		// cache Max Size
+		cacheMaxSize = 1000,
 	} = opts;
 
 	// Default check for shouldUseCache
@@ -114,6 +118,15 @@ function Memoize(callback, opts = {}) {
 
 		// Store the promise for use later...
 		cache.set(key, item);
+
+		// Does the cache need a trim?
+		if (cacheMaxSize && cache.size > cacheMaxSize) {
+			for (const k of cache.keys()) {
+				// Remove the first key and break
+				cache.delete(k);
+				break;
+			}
+		}
 
 		// Return the item value
 		return item.value;
