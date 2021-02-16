@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/5app/memoize/compare/v1.2.0...v1.3.0) (2021-02-16)
+
+
+### Features
+
+* **cache:** Disable Env Var MEMOIZE_DISABLE ([408170e](https://github.com/5app/memoize/commit/408170e8cbb9a4e888652b5453d825f4f25c0a5b))
+
 # [1.2.0](https://github.com/5app/memoize/compare/v1.1.0...v1.2.0) (2020-07-30)
 
 
