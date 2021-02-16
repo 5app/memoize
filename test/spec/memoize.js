@@ -9,6 +9,10 @@ const {expect} = chai;
 const memoize = require('../../index.js');
 
 describe('memoize', () => {
+	beforeEach(() => {
+		delete process.env.MEMOIZE_DISABLED;
+	});
+
 	it('should decorate a function and return a function', () => {
 		const mem = memoize(() => {});
 		expect(mem).to.be.a('function');
@@ -188,5 +192,19 @@ describe('memoize', () => {
 		);
 
 		expect(cache.size).to.equal(1000);
+	});
+
+	it('should no longer cache when process.env.MEMOIZE_DISABLED=true', async () => {
+		let i = 0;
+
+		process.env.MEMOIZE_DISABLED = true;
+
+		const mem = memoize(async () => i++);
+
+		const a = await mem(1);
+		const b = await mem(1);
+
+		expect(a).to.equal(0);
+		expect(b).to.equal(1);
 	});
 });

@@ -66,3 +66,13 @@ const memoGot = memoize(got, {
 // ...
 
 ```
+
+# Globally Disable
+
+In testing to disable the memoize cache which can cause issues, use the `MEMOIZE_DISABLE` environment variable, e.g.
+
+```bash
+MEMOIZE_DISABLE=1
+```
+
+When set to a truthy value the memoize cache will be circumvented.
