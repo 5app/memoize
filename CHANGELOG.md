@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/5app/memoize/compare/v1.3.0...v1.3.1) (2021-02-17)
+
+
+### Bug Fixes
+
+* MEMOIZE_DISABLED - rm 'D' from env var ([d02ac0b](https://github.com/5app/memoize/commit/d02ac0b9cf9a11b38e522876883169b4020948e6))
+
 # [1.3.0](https://github.com/5app/memoize/compare/v1.2.0...v1.3.0) (2021-02-16)
 
 
