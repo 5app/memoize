@@ -10,7 +10,7 @@ const memoize = require('../../index.js');
 
 describe('memoize', () => {
 	beforeEach(() => {
-		delete process.env.MEMOIZE_DISABLED;
+		delete process.env.MEMOIZE_DISABLE;
 	});
 
 	it('should decorate a function and return a function', () => {
@@ -194,10 +194,10 @@ describe('memoize', () => {
 		expect(cache.size).to.equal(1000);
 	});
 
-	it('should no longer cache when process.env.MEMOIZE_DISABLED=true', async () => {
+	it('should no longer cache when process.env.MEMOIZE_DISABLE=true', async () => {
 		let i = 0;
 
-		process.env.MEMOIZE_DISABLED = true;
+		process.env.MEMOIZE_DISABLE = true;
 
 		const mem = memoize(async () => i++);
 

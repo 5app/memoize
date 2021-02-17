@@ -22,7 +22,7 @@
  */
 function Memoize(callback, opts = {}) {
 	// Disable all memoize
-	const {MEMOIZE_DISABLED = false} = process.env;
+	const {MEMOIZE_DISABLE = false} = process.env;
 
 	const {
 		// useCached: Will return the last resolved cached value
@@ -71,7 +71,7 @@ function Memoize(callback, opts = {}) {
 		}
 
 		// Serve the cached value?
-		if (item.value && !MEMOIZE_DISABLED && shouldUseCache(item)) {
+		if (item.value && !MEMOIZE_DISABLE && shouldUseCache(item)) {
 			// We're going to return the last resolved value
 			// But first let's identify the next request
 			// And ensure it's been long enough since the last one...
