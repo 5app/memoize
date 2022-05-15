@@ -32,7 +32,7 @@
 		"chai": "^4.3.0",
 		"chai-as-promised": "^7.1.1",
 		"eslint": "^7.20.0",
-		"eslint-config-5app": "^0.14.0",
+		"eslint-config-5app": "^0.16.0",
 		"eslint-config-prettier": "^8.0.0",
 		"eslint-plugin-prettier": "^3.4.0",
 		"husky": "^4.3.8",
