@@ -25,8 +25,8 @@
 	"homepage": "https://github.com/5app/memoize#readme",
 	"devDependencies": {
 		"@5app/semantic-release-config": "^1.0.0",
-		"@commitlint/cli": "^16.3.0",
-		"@commitlint/config-conventional": "^16.2.4",
+		"@commitlint/cli": "^17.0.0",
+		"@commitlint/config-conventional": "^17.0.0",
 		"chai": "^4.3.6",
 		"chai-as-promised": "^7.1.1",
 		"eslint": "^8.15.0",
