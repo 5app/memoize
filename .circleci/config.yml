@@ -1,54 +1,33 @@
-aliases:
-    - &dir ~/repo
-    - &defaults
-      working_directory: *dir
-      docker:
-          - image: circleci/node:lts
-    - &cache_key
-      key: dependency-cache-{{ checksum "package.json" }}
-    - &attach_workspace
-      attach_workspace:
-          at: *dir
+version: 2.1
 
-version: 2
+orbs:
+    # See the orb documentation here: https://circleci.com/developer/orbs/orb/circleci/node
+    node: circleci/node@5.0.2
+
+executors:
+    default:
+        docker:
+            - image: cimg/node:lts
+
 jobs:
-    checkout_code:
-        <<: *defaults
+    test:
+        executor: default
         steps:
             - checkout
-            - restore_cache:
-                  <<: *cache_key
-            - run: npm install
-            - save_cache:
-                  <<: *cache_key
-                  paths:
-                      - ./node_modules
-            - persist_to_workspace:
-                  root: *dir
-                  paths:
-                      - .
-
-    test:
-        <<: *defaults
-        steps:
-            - *attach_workspace
+            - node/install-packages
             - run: npm test
 
     release:
-        <<: *defaults
+        executor: default
         steps:
-            - *attach_workspace
-            # - checkout # Commenting this line out as I don't think it is needed, please uncomment if the release fails
-            - run: npm run semantic-release
+            - checkout
+            - node/install-packages
+            - run: npx semantic-release
 
 workflows:
-    version: 2
     build:
         jobs:
-            - checkout_code
-            - test:
-                  requires:
-                      - checkout_code
+            - test
             - release:
                   context: org-global
                   requires:
@@ -56,4 +35,4 @@ workflows:
                   filters:
                       branches:
                           only:
-                              - master
+                              - main
