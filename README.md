@@ -11,17 +11,19 @@
 !Warning contrived example ahead...
 
 ```js
-const got = require('got'); // simple http requst library for the purpose of demonstration
-const memoize = require('@5app/memoize');
+import got from 'got'; // simple http requst library for the purpose of demonstration
+import memoize from '@5app/memoize';
 
-// Let's say we're going to decorate an add function... it's
+// Let's decorate the got function
 const memoGot = memoize(got);
 
 // Simultaneously open two connections...
 const link = 'https://github.com';
 Promise.all([memoGot(link), memoGot(link)];
 
-// only one request is actually made, the second will piggy back off the first.
+// Will call...
+// GET https://github.com
+// ... but that's it, it wont call it again the second request will piggy back off the first.
 ```
 
 # Options `memoize(handler, {...options})`
@@ -39,7 +41,8 @@ Whether to use cache this can be a Boolean value (useful to disable it when test
 This snippet checks the cached value before deciding whether to use it...
 
 ```js
-const memoize = require('@5app/memoize');
+import memoize from '@5app/memoize';
+
 const memoGot = memoize(got, {
 	/**
  	 * @param {object} cached_response - Cached Object
