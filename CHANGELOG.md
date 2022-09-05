@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/5app/memoize/compare/v1.4.0...v1.4.1) (2022-09-05)
+
+
+### Bug Fixes
+
+* **github-packages:** publish github registry ([15b7fbb](https://github.com/5app/memoize/commit/15b7fbb20fd88eac4263e0c4bbd5675a687e2c3d))
+
 # [1.4.0](https://github.com/5app/memoize/compare/v1.3.1...v1.4.0) (2022-08-03)
 
 
