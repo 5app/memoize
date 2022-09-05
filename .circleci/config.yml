@@ -23,13 +23,16 @@ jobs:
             - checkout
             - node/install-packages
             - run: npx semantic-release
+            - run: npm publish --@5app:registry=https://npm.pkg.github.com
 
 workflows:
     build:
         jobs:
             - test
             - release:
-                  context: org-global
+                  context:
+                      - org-global
+                      - github-release
                   requires:
                       - test
                   filters:
