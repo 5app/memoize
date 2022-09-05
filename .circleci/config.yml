@@ -23,7 +23,7 @@ jobs:
             - checkout
             - node/install-packages
             - run: npx semantic-release
-            - run: npm publish --@5app:registry=https://npm.pkg.github.com
+            - run: NPM_TOKEN=${GITHUB_TOKEN} npm publish --@5app:registry=https://npm.pkg.github.com
 
 workflows:
     build:
