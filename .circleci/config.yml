@@ -26,7 +26,7 @@ jobs:
             - run:
                   name: Authenticate with GitHub registry
                   command: echo "//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}" > ~/.npmrc
-            - run: npm publish
+            - run: npm publish --@5app:registry=https://npm.pkg.github.com
 
 workflows:
     build:
