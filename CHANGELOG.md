@@ -1,3 +1,10 @@
+## [1.4.6](https://github.com/5app/memoize/compare/v1.4.5...v1.4.6) (2022-09-06)
+
+
+### Bug Fixes
+
+* **github-packages:** test release/npm_and_github circleci orb ([97bbdef](https://github.com/5app/memoize/commit/97bbdef0074addf988a76570985a29b342bb548a))
+
 ## [1.4.5](https://github.com/5app/memoize/compare/v1.4.4...v1.4.5) (2022-09-05)
 
 

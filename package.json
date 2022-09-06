@@ -1,6 +1,6 @@
 {
 	"name": "@5app/memoize",
-	"version": "1.4.5",
+	"version": "1.4.6",
 	"description": "Memoize decorator",
 	"main": "index.js",
 	"type": "module",
