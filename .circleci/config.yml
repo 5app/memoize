@@ -3,6 +3,7 @@ version: 2.1
 orbs:
     # See the orb documentation here: https://circleci.com/developer/orbs/orb/circleci/node
     node: circleci/node@5.0.2
+    release: fiveapp/release@dev:306cbb6a622cf8f7f396fbc40b619d4749856fd1
 
 executors:
     default:
@@ -17,22 +18,11 @@ jobs:
             - node/install-packages
             - run: npm test
 
-    release:
-        executor: default
-        steps:
-            - checkout
-            - node/install-packages
-            - run: npx semantic-release
-            - run:
-                  name: Authenticate with GitHub registry
-                  command: echo "//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}" > ~/.npmrc
-            - run: npm publish --@5app:registry=https://npm.pkg.github.com
-
 workflows:
     build:
         jobs:
             - test
-            - release:
+            - release/npm_and_github:
                   context:
                       - org-global
                       - github-release
