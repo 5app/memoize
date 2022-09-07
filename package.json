@@ -28,6 +28,7 @@
 	},
 	"homepage": "https://github.com/5app/memoize#readme",
 	"devDependencies": {
+		"@5app/prettier-config": "^1.0.3",
 		"@5app/semantic-release-config": "^1.0.1",
 		"@commitlint/cli": "^17.0.3",
 		"@commitlint/config-conventional": "^17.0.3",
@@ -47,6 +48,7 @@
 	"release": {
 		"extends": "@5app/semantic-release-config"
 	},
+	"prettier": "@5app/prettier-config",
 	"commitlint": {
 		"extends": [
 			"@commitlint/config-conventional"
