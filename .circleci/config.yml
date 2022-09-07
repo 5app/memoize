@@ -1,9 +1,8 @@
 version: 2.1
 
 orbs:
-    # See the orb documentation here: https://circleci.com/developer/orbs/orb/circleci/node
     node: circleci/node@5.0.2
-    release: fiveapp/release@dev:306cbb6a622cf8f7f396fbc40b619d4749856fd1
+    release: fiveapp/release@0.0.2
 
 executors:
     default:
