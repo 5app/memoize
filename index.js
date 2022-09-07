@@ -43,7 +43,7 @@ export default function Memoize(callback, opts = {}) {
 
 	// Default check for shouldUseCache
 	// If we have a resolved value, but we want to keep it up to date set to true
-	let shouldUseCache = (item) => item.status === 'resolved' && useCached;
+	let shouldUseCache = item => item.status === 'resolved' && useCached;
 
 	// If the settings say it's a function use that instead
 	if (typeof useCached === 'function') {
