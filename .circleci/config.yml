@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-    node: circleci/node@5
+    node: circleci/node@5.0.2
     release: fiveapp/release@0
 
 workflows:
