@@ -181,7 +181,7 @@ describe('memoize', () => {
 
 	it('should not contain more than 1000 enties in the cache by default', async () => {
 		const cache = new Map();
-		const mem = memoize(async (number) => number / 2, {
+		const mem = memoize(async number => number / 2, {
 			cache,
 		});
 
