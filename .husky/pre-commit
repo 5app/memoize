@@ -1,0 +1,4 @@
+# Pre commit
+npx pretty-quick --staged
+npm run precommit-msg
+npm run lint-diff
