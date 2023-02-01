@@ -1,3 +1,59 @@
+## [1.4.7](https://github.com/5app/memoize/compare/v1.4.6...v1.4.7) (2022-09-07)
+
+
+### Bug Fixes
+
+* **github-packages:** test release/npm_and_github circleci orb ([f081604](https://github.com/5app/memoize/commit/f081604c154671c76fc9a38d6e0bbf68ede78a15))
+
+## [1.4.6](https://github.com/5app/memoize/compare/v1.4.5...v1.4.6) (2022-09-06)
+
+
+### Bug Fixes
+
+* **github-packages:** test release/npm_and_github circleci orb ([97bbdef](https://github.com/5app/memoize/commit/97bbdef0074addf988a76570985a29b342bb548a))
+
+## [1.4.5](https://github.com/5app/memoize/compare/v1.4.4...v1.4.5) (2022-09-05)
+
+
+### Bug Fixes
+
+* **github-packages:** publish github registry ([09cb723](https://github.com/5app/memoize/commit/09cb72307c933b71c4dfe9b24d86b15389a76f20))
+
+## [1.4.4](https://github.com/5app/memoize/compare/v1.4.3...v1.4.4) (2022-09-05)
+
+
+### Bug Fixes
+
+* **github-packages:** publish github registry experiment ([3fc4152](https://github.com/5app/memoize/commit/3fc4152b881ace22b1638d8a7f33c2fd42cb1892))
+
+## [1.4.3](https://github.com/5app/memoize/compare/v1.4.2...v1.4.3) (2022-09-05)
+
+
+### Bug Fixes
+
+* **github-packages:** publish github registry ([e9bef64](https://github.com/5app/memoize/commit/e9bef649241ac59c88ae30d55351b566f07bed6e))
+
+## [1.4.2](https://github.com/5app/memoize/compare/v1.4.1...v1.4.2) (2022-09-05)
+
+
+### Bug Fixes
+
+* **github-packages:** publish github registry ([9566065](https://github.com/5app/memoize/commit/956606527f38c42889b75c3fb1e027f0195f1d6c))
+
+## [1.4.1](https://github.com/5app/memoize/compare/v1.4.0...v1.4.1) (2022-09-05)
+
+
+### Bug Fixes
+
+* **github-packages:** publish github registry ([15b7fbb](https://github.com/5app/memoize/commit/15b7fbb20fd88eac4263e0c4bbd5675a687e2c3d))
+
+# [1.4.0](https://github.com/5app/memoize/compare/v1.3.1...v1.4.0) (2022-08-03)
+
+
+### Features
+
+* **esm:** convert to esm, npm update, noissue ([#40](https://github.com/5app/memoize/issues/40)) ([e391722](https://github.com/5app/memoize/commit/e391722a678694d49d3401fa19b8ead7f08a3b51))
+
 ## [1.3.1](https://github.com/5app/memoize/compare/v1.3.0...v1.3.1) (2021-02-17)
 
 

@@ -1,37 +1,19 @@
 version: 2.1
 
 orbs:
-    # See the orb documentation here: https://circleci.com/developer/orbs/orb/circleci/node
-    node: circleci/node@5.0.2
-
-executors:
-    default:
-        docker:
-            - image: cimg/node:lts
-
-jobs:
-    test:
-        executor: default
-        steps:
-            - checkout
-            - node/install-packages
-            - run: npm test
-
-    release:
-        executor: default
-        steps:
-            - checkout
-            - node/install-packages
-            - run: npx semantic-release
+    node: circleci/node@5.0.3
+    release: fiveapp/release@0
 
 workflows:
     build:
         jobs:
-            - test
-            - release:
-                  context: org-global
+            - node/test
+            - release/npm_and_github:
+                  context:
+                      - org-global
+                      - github-release
                   requires:
-                      - test
+                      - node/test
                   filters:
                       branches:
                           only:

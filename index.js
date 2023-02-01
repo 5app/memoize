@@ -20,7 +20,7 @@
  * @param {number} [opts.cacheMaxSize=1000] - Maximum Cache Size
  * @returns {Function} The decorated callback function
  */
-function Memoize(callback, opts = {}) {
+export default function Memoize(callback, opts = {}) {
 	// Disable all memoize
 	const {MEMOIZE_DISABLE = false} = process.env;
 
@@ -135,5 +135,3 @@ function Memoize(callback, opts = {}) {
 		return item.value;
 	};
 }
-
-module.exports = Memoize;

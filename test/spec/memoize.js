@@ -1,12 +1,11 @@
-const chai = require('chai');
-const chaiAsPromised = require('chai-as-promised');
+import chai from 'chai';
+import chaiAsPromised from 'chai-as-promised';
+import memoize from '../../index.js';
 
 // Extend Chai
 chai.use(chaiAsPromised);
 
 const {expect} = chai;
-
-const memoize = require('../../index.js');
 
 describe('memoize', () => {
 	beforeEach(() => {
