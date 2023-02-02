@@ -13,7 +13,7 @@
 		"prepare": "is-ci || husky install",
 		"lint": "eslint ./",
 		"lint-fix": "npm run lint -- --fix",
-		"lint-diff": "LIST=`git diff-index --name-only HEAD | grep '.*\\.ts$';`; if [ \"$LIST\" ]; then eslint $LIST; fi",
+		"lint-diff": "LIST=`git diff-index --name-only HEAD | grep '.*\\.[tj]s$';`; if [ \"$LIST\" ]; then eslint $LIST; fi",
 		"precommit-msg": "echo 'Running pre-commit checks... (skip using --no-verify)' && exit 0",
 		"test": "npm run lint && npm run build && npm run spec",
 		"spec": "nyc mocha test/spec/**/*.js"
