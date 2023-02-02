@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-    node: circleci/node@5.0.3
+    node: circleci/node@5
     release: fiveapp/release@0
 
 workflows:
@@ -9,6 +9,7 @@ workflows:
         jobs:
             - node/test
             - release/npm_and_github:
+                  build_command: npm run build
                   context:
                       - org-global
                       - github-release

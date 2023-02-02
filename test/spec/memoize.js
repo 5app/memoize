@@ -1,6 +1,6 @@
 import chai from 'chai';
 import chaiAsPromised from 'chai-as-promised';
-import memoize from '../../index.js';
+import memoize from '../../dist/index.js';
 
 // Extend Chai
 chai.use(chaiAsPromised);
@@ -13,7 +13,9 @@ describe('memoize', () => {
 	});
 
 	it('should decorate a function and return a function', () => {
-		const mem = memoize(() => {});
+		const mem = memoize(() => {
+			// Continue
+		});
 		expect(mem).to.be.a('function');
 	});
 	it('should prevent multiple calls to a function', async () => {
