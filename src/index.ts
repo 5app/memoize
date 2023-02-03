@@ -27,7 +27,7 @@ interface MemoizeOptions {
 	getKey?: Function;
 
 	// cache: Caching Map
-	cache?: Map<string | number | symbol, any>;
+	cache?: Map<string | number | symbol, MemoizeCacheItem>;
 
 	// cache Max Size
 	cacheMaxSize?: number;
