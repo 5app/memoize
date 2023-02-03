@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-interface CacheItem {
+interface MemoizeCacheItem {
 	// Memoize item status
 	status?: 'pending' | 'resolved' | 'rejected';
 
@@ -13,9 +13,11 @@ interface CacheItem {
 	timestamp?: number;
 }
 
+type MemoizeUseCacheHandler = (param: MemoizeCacheItem) => boolean;
+
 interface MemoizeOptions {
 	// useCached: Will return the last resolved cached value
-	useCached?: true | false | ((param: CacheItem) => boolean);
+	useCached?: true | false | MemoizeUseCacheHandler;
 
 	// staleInMs: How long before we should check for new updates
 	staleInMs?: number;
@@ -82,15 +84,14 @@ export default function Memoize(
 
 	// Default check for shouldUseCache
 	// If we have a resolved value, but we want to keep it up to date set to true
-	let shouldUseCache: (param: CacheItem) => boolean;
+	let shouldUseCache: MemoizeUseCacheHandler;
 
 	// If the settings say it's a function use that instead
 	if (typeof useCached === 'function') {
 		// Update the condition to use the bespoke option
 		shouldUseCache = useCached;
 	} else {
-		shouldUseCache = (item: CacheItem) =>
-			item.status === 'resolved' && useCached;
+		shouldUseCache = item => item.status === 'resolved' && useCached;
 	}
 
 	/**
@@ -104,7 +105,7 @@ export default function Memoize(
 		const key = getKey(...args);
 
 		// Find value based upon the key
-		const item: CacheItem = cache.get(key) || {};
+		const item: MemoizeCacheItem = cache.get(key) || {};
 
 		// Has value resolved yet?
 		if (item.status === 'pending') {
