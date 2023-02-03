@@ -1,22 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/ban-types */
-interface MemoizeOptions {
-	// useCached: Will return the last resolved cached value
-	useCached?: true | false | Function;
-
-	// staleInMs: How long before we should check for new updates
-	staleInMs?: number;
-
-	// getKey: Default key definition
-	getKey?: Function;
-
-	// cache: Caching Map
-	cache?: Map<string | number | Symbol, any>;
-
-	// cache Max Size
-	cacheMaxSize?: number;
-}
-
 interface CacheItem {
 	// Memoize item status
 	status?: 'pending' | 'resolved' | 'rejected';
@@ -29,6 +11,24 @@ interface CacheItem {
 
 	// When this cache item was created
 	timestamp?: number;
+}
+
+interface MemoizeOptions {
+	// useCached: Will return the last resolved cached value
+	useCached?: true | false | ((param: CacheItem) => boolean);
+
+	// staleInMs: How long before we should check for new updates
+	staleInMs?: number;
+
+	// getKey: Default key definition
+	// eslint-disable-next-line @typescript-eslint/ban-types
+	getKey?: Function;
+
+	// cache: Caching Map
+	cache?: Map<string | number | symbol, any>;
+
+	// cache Max Size
+	cacheMaxSize?: number;
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types
@@ -82,7 +82,7 @@ export default function Memoize(
 
 	// Default check for shouldUseCache
 	// If we have a resolved value, but we want to keep it up to date set to true
-	let shouldUseCache: Function;
+	let shouldUseCache: (param: CacheItem) => boolean;
 
 	// If the settings say it's a function use that instead
 	if (typeof useCached === 'function') {
