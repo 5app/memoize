@@ -13,6 +13,8 @@ interface MemoizeCacheItem {
 	timestamp?: number;
 }
 
+type MemoizeCacheKey = string | number | symbol;
+
 type MemoizeUseCacheHandler = (param: MemoizeCacheItem) => boolean;
 
 interface MemoizeOptions {
@@ -23,18 +25,18 @@ interface MemoizeOptions {
 	staleInMs?: number;
 
 	// getKey: Default key definition
-	// eslint-disable-next-line @typescript-eslint/ban-types
-	getKey?: Function;
+	getKey?: (...args: any) => MemoizeCacheKey;
 
 	// cache: Caching Map
-	cache?: Map<string | number | symbol, MemoizeCacheItem>;
+	cache?: Map<MemoizeCacheKey, MemoizeCacheItem>;
 
 	// cache Max Size
 	cacheMaxSize?: number;
 }
-
-// eslint-disable-next-line @typescript-eslint/ban-types
-type MemoizeCallback = Function;
+/*
+ * Ideally the parameter types would inherit that of the function defined for the callback
+ */
+type MemoizeCallback = (...args: any) => any;
 
 /**
  * Memoize
@@ -80,7 +82,7 @@ export default function Memoize(
 
 		// cache Max Size
 		cacheMaxSize = 1000,
-	} = opts;
+	}: MemoizeOptions = opts;
 
 	// Default check for shouldUseCache
 	// If we have a resolved value, but we want to keep it up to date set to true
