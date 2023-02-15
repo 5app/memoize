@@ -4,10 +4,10 @@ interface MemoizeCacheItem {
 	status?: 'pending' | 'resolved' | 'rejected';
 
 	// Value if resolved
-	value?: any;
+	value?: unknown;
 
 	// Next request in waiting
-	next?: any;
+	next?: unknown;
 
 	// When this cache item was created
 	timestamp?: number;
@@ -17,7 +17,7 @@ type MemoizeCacheKey = string | number | symbol;
 
 type MemoizeUseCacheHandler = (param: MemoizeCacheItem) => boolean;
 
-interface MemoizeOptions {
+interface MemoizeOptions<ParameterTypes> {
 	// useCached: Will return the last resolved cached value
 	useCached?: true | false | MemoizeUseCacheHandler;
 
@@ -25,7 +25,7 @@ interface MemoizeOptions {
 	staleInMs?: number;
 
 	// getKey: Default key definition
-	getKey?: (...args: any) => MemoizeCacheKey;
+	getKey?: (args: ParameterTypes) => MemoizeCacheKey;
 
 	// cache: Caching Map
 	cache?: Map<MemoizeCacheKey, MemoizeCacheItem>;
@@ -33,10 +33,6 @@ interface MemoizeOptions {
 	// cache Max Size
 	cacheMaxSize?: number;
 }
-/*
- * Ideally the parameter types would inherit that of the function defined for the callback
- */
-type MemoizeCallback = (...args: any) => any;
 
 /**
  * Memoize
@@ -60,9 +56,9 @@ type MemoizeCallback = (...args: any) => any;
  * @param {number} [opts.cacheMaxSize=1000] - Maximum Cache Size
  * @returns {Function} The decorated callback function
  */
-export default function Memoize(
-	callback: MemoizeCallback,
-	opts: MemoizeOptions = {}
+export default function Memoize<ParameterTypes extends Array<unknown>>(
+	callback: (...args: ParameterTypes) => Promise<unknown>,
+	opts: MemoizeOptions<ParameterTypes> = {}
 ) {
 	// Disable all memoize
 	const {MEMOIZE_DISABLE = false} = process.env;
@@ -82,7 +78,7 @@ export default function Memoize(
 
 		// cache Max Size
 		cacheMaxSize = 1000,
-	}: MemoizeOptions = opts;
+	}: MemoizeOptions<ParameterTypes> = opts;
 
 	// Default check for shouldUseCache
 	// If we have a resolved value, but we want to keep it up to date set to true
@@ -102,9 +98,9 @@ export default function Memoize(
 	 * @param {...*} args - Any number of arguments
 	 * @returns {Promise} Value of the callback
 	 */
-	return async (...args: any) => {
+	return async (...args: ParameterTypes) => {
 		// Serialize the keys...
-		const key = getKey(...args);
+		const key = getKey(args);
 
 		// Find value based upon the key
 		const item: MemoizeCacheItem = cache.get(key) || {};
