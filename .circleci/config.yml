@@ -9,6 +9,7 @@ workflows:
         jobs:
             - node/test
             - release/npm_and_github:
+                  build_command: npm run build
                   context:
                       - org-global
                       - github-release

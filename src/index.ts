@@ -1,3 +1,41 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+interface MemoizeCacheItem<CallbackValue> {
+	// Memoize item status
+	status?: 'pending' | 'resolved' | 'rejected';
+
+	// Value if resolved
+	value?: CallbackValue;
+
+	// Next request in waiting
+	next?: CallbackValue;
+
+	// When this cache item was created
+	timestamp?: number;
+}
+
+type MemoizeCacheKey = string | number | symbol;
+
+type MemoizeUseCacheHandler<CallbackValue> = (
+	param: MemoizeCacheItem<CallbackValue>
+) => boolean;
+
+interface MemoizeOptions<ParameterTypes, CallbackValue> {
+	// useCached: Will return the last resolved cached value
+	useCached?: true | false | MemoizeUseCacheHandler<CallbackValue>;
+
+	// staleInMs: How long before we should check for new updates
+	staleInMs?: number;
+
+	// getKey: Default key definition
+	getKey?: (args: ParameterTypes) => MemoizeCacheKey;
+
+	// cache: Caching Map
+	cache?: Map<MemoizeCacheKey, MemoizeCacheItem<CallbackValue>>;
+
+	// cache Max Size
+	cacheMaxSize?: number;
+}
+
 /**
  * Memoize
  * Memoization or memoisation is an optimization technique used primarily to speed up
@@ -20,7 +58,13 @@
  * @param {number} [opts.cacheMaxSize=1000] - Maximum Cache Size
  * @returns {Function} The decorated callback function
  */
-export default function Memoize(callback, opts = {}) {
+export default function Memoize<
+	ParameterTypes extends Array<unknown>,
+	CallbackValue extends Promise<unknown>
+>(
+	callback: (...args: ParameterTypes) => CallbackValue,
+	opts: MemoizeOptions<ParameterTypes, CallbackValue> = {}
+) {
 	// Disable all memoize
 	const {MEMOIZE_DISABLE = false} = process.env;
 
@@ -29,7 +73,7 @@ export default function Memoize(callback, opts = {}) {
 		useCached = true,
 
 		// staleInMs: How long before we should check for new updates
-		staleInMs = 10000,
+		staleInMs = 10_000,
 
 		// getKey: Default key definition
 		getKey = JSON.stringify,
@@ -39,16 +83,18 @@ export default function Memoize(callback, opts = {}) {
 
 		// cache Max Size
 		cacheMaxSize = 1000,
-	} = opts;
+	}: MemoizeOptions<ParameterTypes, CallbackValue> = opts;
 
 	// Default check for shouldUseCache
 	// If we have a resolved value, but we want to keep it up to date set to true
-	let shouldUseCache = item => item.status === 'resolved' && useCached;
+	let shouldUseCache: MemoizeUseCacheHandler<CallbackValue>;
 
 	// If the settings say it's a function use that instead
 	if (typeof useCached === 'function') {
 		// Update the condition to use the bespoke option
 		shouldUseCache = useCached;
+	} else {
+		shouldUseCache = item => item.status === 'resolved' && useCached;
 	}
 
 	/**
@@ -57,12 +103,12 @@ export default function Memoize(callback, opts = {}) {
 	 * @param {...*} args - Any number of arguments
 	 * @returns {Promise} Value of the callback
 	 */
-	return async (...args) => {
+	return async (...args: ParameterTypes) => {
 		// Serialize the keys...
-		const key = getKey(...args);
+		const key = getKey(args);
 
 		// Find value based upon the key
-		const item = cache.get(key) || {};
+		const item: MemoizeCacheItem<CallbackValue> = cache.get(key) || {};
 
 		// Has value resolved yet?
 		if (item.status === 'pending') {
@@ -75,7 +121,11 @@ export default function Memoize(callback, opts = {}) {
 			// We're going to return the last resolved value
 			// But first let's identify the next request
 			// And ensure it's been long enough since the last one...
-			if (!item.next && item.timestamp <= Date.now() - staleInMs) {
+			if (
+				!item.next &&
+				item.timestamp &&
+				item.timestamp <= Date.now() - staleInMs
+			) {
 				const next = callback(...args);
 				item.next = next;
 				next.then(
