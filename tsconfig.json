@@ -8,7 +8,8 @@
 		"lib": ["dom"],
 		// Generate d.ts files
 		"declaration": true,
-		"downlevelIteration": true
+		"downlevelIteration": true,
+		"ignoreDeprecations": "5.0"
 	},
 	"include": ["src/**/*"]
 }
