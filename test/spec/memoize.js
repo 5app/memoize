@@ -169,7 +169,7 @@ describe('memoize', () => {
 					// Use cache of rejected as well
 					return true;
 				},
-				staleInMs: 10000, // sometime in the distance
+				staleInMs: 10_000, // sometime in the distance
 			}
 		);
 
