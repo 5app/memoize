@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-interface MemoizeCacheItem {
+interface MemoizeCacheItem<CallbackValue> {
 	// Memoize item status
 	status?: 'pending' | 'resolved' | 'rejected';
 
 	// Value if resolved
-	value?: unknown;
+	value?: CallbackValue;
 
 	// Next request in waiting
-	next?: unknown;
+	next?: CallbackValue;
 
 	// When this cache item was created
 	timestamp?: number;
@@ -15,11 +15,13 @@ interface MemoizeCacheItem {
 
 type MemoizeCacheKey = string | number | symbol;
 
-type MemoizeUseCacheHandler = (param: MemoizeCacheItem) => boolean;
+type MemoizeUseCacheHandler<CallbackValue> = (
+	param: MemoizeCacheItem<CallbackValue>
+) => boolean;
 
-interface MemoizeOptions<ParameterTypes> {
+interface MemoizeOptions<ParameterTypes, CallbackValue> {
 	// useCached: Will return the last resolved cached value
-	useCached?: true | false | MemoizeUseCacheHandler;
+	useCached?: true | false | MemoizeUseCacheHandler<CallbackValue>;
 
 	// staleInMs: How long before we should check for new updates
 	staleInMs?: number;
@@ -28,7 +30,7 @@ interface MemoizeOptions<ParameterTypes> {
 	getKey?: (args: ParameterTypes) => MemoizeCacheKey;
 
 	// cache: Caching Map
-	cache?: Map<MemoizeCacheKey, MemoizeCacheItem>;
+	cache?: Map<MemoizeCacheKey, MemoizeCacheItem<CallbackValue>>;
 
 	// cache Max Size
 	cacheMaxSize?: number;
@@ -56,9 +58,12 @@ interface MemoizeOptions<ParameterTypes> {
  * @param {number} [opts.cacheMaxSize=1000] - Maximum Cache Size
  * @returns {Function} The decorated callback function
  */
-export default function Memoize<ParameterTypes extends Array<unknown>>(
-	callback: (...args: ParameterTypes) => Promise<unknown>,
-	opts: MemoizeOptions<ParameterTypes> = {}
+export default function Memoize<
+	ParameterTypes extends Array<unknown>,
+	CallbackValue extends Promise<unknown>
+>(
+	callback: (...args: ParameterTypes) => CallbackValue,
+	opts: MemoizeOptions<ParameterTypes, CallbackValue> = {}
 ) {
 	// Disable all memoize
 	const {MEMOIZE_DISABLE = false} = process.env;
@@ -68,7 +73,7 @@ export default function Memoize<ParameterTypes extends Array<unknown>>(
 		useCached = true,
 
 		// staleInMs: How long before we should check for new updates
-		staleInMs = 10000,
+		staleInMs = 10_000,
 
 		// getKey: Default key definition
 		getKey = JSON.stringify,
@@ -78,11 +83,11 @@ export default function Memoize<ParameterTypes extends Array<unknown>>(
 
 		// cache Max Size
 		cacheMaxSize = 1000,
-	}: MemoizeOptions<ParameterTypes> = opts;
+	}: MemoizeOptions<ParameterTypes, CallbackValue> = opts;
 
 	// Default check for shouldUseCache
 	// If we have a resolved value, but we want to keep it up to date set to true
-	let shouldUseCache: MemoizeUseCacheHandler;
+	let shouldUseCache: MemoizeUseCacheHandler<CallbackValue>;
 
 	// If the settings say it's a function use that instead
 	if (typeof useCached === 'function') {
@@ -103,7 +108,7 @@ export default function Memoize<ParameterTypes extends Array<unknown>>(
 		const key = getKey(args);
 
 		// Find value based upon the key
-		const item: MemoizeCacheItem = cache.get(key) || {};
+		const item: MemoizeCacheItem<CallbackValue> = cache.get(key) || {};
 
 		// Has value resolved yet?
 		if (item.status === 'pending') {
