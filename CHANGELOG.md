@@ -1,3 +1,28 @@
+# [2.0.0](https://github.com/5app/memoize/compare/v1.4.7...v2.0.0) (2023-03-17)
+
+
+### Features
+
+* **typescript:** migrate to typescript ([#56](https://github.com/5app/memoize/issues/56)) ([52fa531](https://github.com/5app/memoize/commit/52fa5315f017ac3b07736cef6b44bd326dca28b3))
+
+
+### BREAKING CHANGES
+
+* **typescript:** this changes the getKey parameters 😭
+
+* chore(deps): update deps
+
+* feat(ts): add callback values, noissue
+
+* chore: rm editorconfig
+
+* chore(lint): fix lint
+
+* chore(ts): remove deprecation warnings
+
+
+BREAKING CHANGES: Change in the `options.getKey(...args)` => `options.getKeys(args)` args is contained in first parameter.
+
 ## [1.4.7](https://github.com/5app/memoize/compare/v1.4.6...v1.4.7) (2022-09-07)
 
 
