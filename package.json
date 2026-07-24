@@ -29,7 +29,7 @@
 	"homepage": "https://github.com/5app/memoize#readme",
 	"devDependencies": {
 		"@5app/prettier-config": "^1.0.4",
-		"@5app/semantic-release-config": "^1.1.0",
+		"@5app/semantic-release-config": "^2.0.0",
 		"@commitlint/cli": "^17.4.4",
 		"@commitlint/config-conventional": "^17.4.4",
 		"@tsconfig/node16-strictest-esm": "^1.0.3",
